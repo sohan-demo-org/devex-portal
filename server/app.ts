@@ -3,6 +3,7 @@ import type { CiRun, CiStage, DevEnvironment, RunDetail, TestResult } from '../s
 import { all, get, type Db } from './db.ts'
 import { buildLog } from './logs.ts'
 import { dailyCi, percentile, summary } from './metrics.ts'
+import { registerEnvironmentRoutes } from './environments.ts'
 
 const num = (v: unknown, def: number, max = Number.MAX_SAFE_INTEGER) => {
   const n = Number(v)
@@ -102,5 +103,6 @@ export function createApp(db: Db, clock: () => number = Date.now) {
     })
   }
 
+  registerEnvironmentRoutes(app, db, clock)
   return app
 }

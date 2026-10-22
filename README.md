@@ -60,6 +60,9 @@ CI (`.github/workflows/ci.yml`) runs all four on every PR.
 | GET | `/api/deployments?service_id=` | production deployments |
 | GET | `/api/environments` | dev environments |
 | POST | `/api/environments/:id/start` / `stop` | change workspace state |
+| GET | `/api/environments/usage` | workspaces with idle state, idle hours and wasted spend (idle = running, no activity for > 4h) |
+| POST | `/api/environments/:id/hibernate` | release compute ($0/hr), keep the disk; `start` resumes it |
+| POST | `/api/environments/hibernate-idle` | hibernate every idle workspace |
 
 ## Data model
 

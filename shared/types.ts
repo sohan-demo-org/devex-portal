@@ -1,6 +1,6 @@
 export type RunStatus = 'success' | 'failed' | 'running' | 'cancelled'
 export type TestStatus = 'passed' | 'failed' | 'skipped'
-export type EnvStatus = 'running' | 'stopped'
+export type EnvStatus = 'running' | 'stopped' | 'hibernated'
 
 export interface Service {
   id: string
@@ -122,4 +122,32 @@ export interface DailyCi {
 export interface Page<T> {
   total: number
   result: T[]
+}
+
+// --- idle dev environments ---
+
+export interface EnvironmentUsage extends DevEnvironment {
+  idle: boolean
+  idle_hours: number
+  wasted_spend: number
+}
+
+export interface EnvironmentUsageReport {
+  idle_threshold_hours: number
+  idle_count: number
+  idle_hourly_cost: number
+  idle_cost_per_day: number
+  wasted_spend_total: number
+  environments: EnvironmentUsage[]
+}
+
+export interface HibernateIdleResult {
+  hibernated: string[]
+  count: number
+  hourly_savings: number
+  daily_savings: number
+}
+
+export interface MetricsSummary {
+  hibernated_envs: number
 }

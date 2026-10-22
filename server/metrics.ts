@@ -38,6 +38,7 @@ export function summary(db: Db, days: number, now = Date.now()): MetricsSummary 
     queue_median_s: percentile(runs.map((r) => r.queue_s), 50),
     running_envs: envs.n,
     env_cost_per_day: round(envs.cost * 24, 2),
+    hibernated_envs: get<{ n: number }>(db, "SELECT COUNT(*) AS n FROM dev_environments WHERE status = 'hibernated'")!.n,
   }
 }
 
