@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
-import type { RunDetail } from '../../shared/types.ts'
+import type { QuarantinedTest, RunDetail } from '../../shared/types.ts'
 import { useApi } from '../api.ts'
 import { Loading, PageHeader, StatusPill } from '../components/ui.tsx'
 import { fmtDuration, fmtTime } from '../util.ts'
@@ -7,6 +7,8 @@ import { fmtDuration, fmtTime } from '../util.ts'
 export function RunDetailPage() {
   const { id } = useParams()
   const { data: run, error } = useApi<RunDetail>(`/api/runs/${id}`)
+  const { data: quarantined } = useApi<QuarantinedTest[]>(run ? `/api/flaky-tests/quarantine?service_id=${encodeURIComponent(run.service_id)}` : null)
+  const isQuarantined = (t: { suite: string; test_name: string }) => quarantined?.some((q) => q.suite === t.suite && q.test_name === t.test_name) ?? false
   if (!run) return <Loading error={error} />
   const total = Math.max(1, run.stages.reduce((a, s) => a + s.duration_s, 0))
   const failed = run.tests.filter((t) => t.status === 'failed').length
@@ -47,7 +49,7 @@ export function RunDetailPage() {
               <tr key={t.id}>
                 <td><StatusPill status={t.status} /></td>
                 <td className="muted">{t.suite}</td>
-                <td className="mono">{t.test_name}</td>
+                <td className="mono">{t.test_name}{isQuarantined(t) && <span className="tag tag-quarantined" title="Quarantined on the Flaky Tests page">quarantined</span>}</td>
                 <td>{t.duration_ms ? `${(t.duration_ms / 1000).toFixed(2)}s` : '—'}</td>
                 <td className="text-bad small wrap">{t.failure_message}</td>
               </tr>

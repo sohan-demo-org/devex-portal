@@ -9,6 +9,8 @@ manager one place to see:
 - **Service Catalog**: ownership, on-call, tier and build health for each service.
 - **Deployments**: production releases with lead time and recovery data.
 - **Dev Environments**: remote workspaces (machine size, region, IDE, last activity, hourly cost) with start/stop.
+- **Flaky Tests**: tests that failed and then passed on a re-run of the same commit, ranked by flaky failures, re-runs
+  caused and CI minutes wasted, with owner, 30-day failure rate and quarantine / unquarantine.
 
 ## Stack
 
@@ -60,6 +62,9 @@ CI (`.github/workflows/ci.yml`) runs all four on every PR.
 | GET | `/api/deployments?service_id=` | production deployments |
 | GET | `/api/environments` | dev environments |
 | POST | `/api/environments/:id/start` / `stop` | change workspace state |
+| GET | `/api/flaky-tests?days=30` | flaky tests ranked by impact, with totals |
+| GET | `/api/flaky-tests/quarantine?service_id=` | quarantined tests |
+| POST | `/api/flaky-tests/quarantine` / `unquarantine` | body `{ service_id, suite, test_name, reason? }` |
 
 ## Data model
 

@@ -106,3 +106,16 @@ button:disabled { opacity: 0.45; cursor: default; }
 .meta dd { margin: 0; }
 .sparkline { color: var(--brand); }
 @media (max-width: 1100px) { .grid.kpis { grid-template-columns: repeat(2, 1fr); } .grid.two { grid-template-columns: 1fr; } }
+
+/* --- flaky tests --- */
+.tag-quarantined { background: #ede7fb; color: #5b3cc4; white-space: nowrap; display: inline-block; }
+.flaky-table tr.is-quarantined td { background: #fbfaff; }
+.check { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); cursor: pointer; }
+.check input { min-width: 0; padding: 0; }
+.kpi-link { display: block; color: inherit; }
+.kpi-link:hover { text-decoration: none; }
+.kpi-link > .card { height: 100%; margin-bottom: 0; }
+.kpi-link:hover > .card { border-color: var(--brand); }
+.link-text { color: #0a6c94; font-weight: 600; }
+.flaky-table td.failure-msg { min-width: 170px; max-width: 230px; overflow-wrap: anywhere; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; }
+.flaky-table th, .flaky-table td { padding-left: 8px; padding-right: 8px; }

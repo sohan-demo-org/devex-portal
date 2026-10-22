@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import type { CiRun, DailyCi, MetricsSummary, Page, ServiceSummary } from '../../shared/types.ts'
 import { useApi } from '../api.ts'
 import { CiChart } from '../components/CiChart.tsx'
+import { FlakyTestsKpi } from '../components/FlakyTestsKpi.tsx'
 import { Kpi, Loading, PageHeader, StatusPill } from '../components/ui.tsx'
 import { fmtAgo, fmtDuration, fmtMoney, fmtPct } from '../util.ts'
 
@@ -44,6 +45,7 @@ export function Dashboard() {
           </div>
         </>
       )}
+      <FlakyTestsKpi />
 
       <div className="grid two">
         <div className="card">

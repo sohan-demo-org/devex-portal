@@ -123,3 +123,42 @@ export interface Page<T> {
   total: number
   result: T[]
 }
+
+// --- flaky tests ---
+export interface FlakyTest {
+  service_id: string
+  service_name: string
+  team: string
+  owner: string
+  suite: string
+  test_name: string
+  executions: number
+  failures: number
+  failure_rate: number
+  flaky_failures: number
+  flaky_commits: number
+  reruns: number
+  minutes_wasted: number
+  last_flaked_at: string
+  last_failure_message: string | null
+  quarantined: boolean
+  quarantined_at: string | null
+}
+
+export interface FlakyTestsReport {
+  window_days: number
+  flaky_tests: number
+  flaky_failures: number
+  reruns: number
+  minutes_wasted: number
+  quarantined: number
+  tests: FlakyTest[]
+}
+
+export interface QuarantinedTest {
+  service_id: string
+  suite: string
+  test_name: string
+  reason: string | null
+  quarantined_at: string
+}
