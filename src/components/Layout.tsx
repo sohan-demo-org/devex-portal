@@ -7,6 +7,7 @@ const NAV = [
   { to: '/services', label: 'Service Catalog', icon: '▦' },
   { to: '/deployments', label: 'Deployments', icon: '⇪' },
   { to: '/environments', label: 'Dev Environments', icon: '⌂' },
+  { to: '/flaky-tests', label: 'Flaky Tests', icon: '⚠' },
 ]
 
 export function Layout({ children }: { children: ReactNode }) {

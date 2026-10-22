@@ -1,6 +1,7 @@
 import express, { type Request } from 'express'
 import type { CiRun, CiStage, DevEnvironment, RunDetail, TestResult } from '../shared/types.ts'
 import { all, get, type Db } from './db.ts'
+import { registerFlakyRoutes } from './flaky.ts'
 import { buildLog } from './logs.ts'
 import { dailyCi, percentile, summary } from './metrics.ts'
 
@@ -102,5 +103,6 @@ export function createApp(db: Db, clock: () => number = Date.now) {
     })
   }
 
+  registerFlakyRoutes(app, db, clock)
   return app
 }
