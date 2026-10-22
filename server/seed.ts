@@ -244,7 +244,8 @@ export function seed(db: Db, now = Date.now()) {
       const regressionCommitDay = s.id === REGRESSION_SERVICE && d === SEED_DAYS - REGRESSION_DAYS
 
       for (let i = 0; i < runs; i++) {
-        const queuedAt = dayStart + (8 + r() * 11) * HOUR + i * 60_000
+        const offset = (8 + r() * 11) * HOUR + i * 60_000
+        const queuedAt = dayStart + (regressionCommitDay && i === 0 ? 7.5 * HOUR : offset)
         if (queuedAt > now - 10 * 60_000) continue
         const onMain = r() < 0.45
         const author = pick(ENGINEERS)

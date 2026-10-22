@@ -1,7 +1,9 @@
 import { Link, useParams } from 'react-router-dom'
-import type { CiRun, DailyCi, Deployment, Page, Service } from '../../shared/types.ts'
+import type { CiRun, DailyCi, Deployment, Page, Service, ServiceBuildTrend } from '../../shared/types.ts'
 import { useApi } from '../api.ts'
 import { CiChart } from '../components/CiChart.tsx'
+import { RegressionBanner } from '../components/RegressionBanner.tsx'
+import { StageTrend } from '../components/StageTrend.tsx'
 import { Loading, PageHeader, StatusPill } from '../components/ui.tsx'
 import { fmtAgo, fmtDuration, fmtTime } from '../util.ts'
 
@@ -11,11 +13,13 @@ export function ServiceDetail() {
   const { data: daily } = useApi<DailyCi[]>(`/api/metrics/ci-daily?days=30&service=${id}`)
   const { data: runs } = useApi<Page<CiRun>>(`/api/runs?service_id=${id}&limit=15`)
   const { data: deploys } = useApi<Deployment[]>(`/api/deployments?service_id=${id}&limit=10`)
+  const { data: trend } = useApi<ServiceBuildTrend>(`/api/regressions/${id}?days=30`)
   if (!svc) return <Loading error={error} />
 
   return (
     <>
       <PageHeader title={svc.name} subtitle={<>{svc.description} <span className="mono muted">{svc.repo}</span></>} actions={<span className={`tier tier-${svc.tier}`}>{svc.tier}</span>} />
+      {trend && <RegressionBanner analysis={trend.analysis} />}
       <div className="grid kpis">
         <div className="card"><div className="kpi-label">Team</div>{svc.team}</div>
         <div className="card"><div className="kpi-label">Owner</div>{svc.owner}</div>
@@ -26,6 +30,7 @@ export function ServiceDetail() {
         <div className="card-title">CI runs · last 30 days</div>
         {daily ? <CiChart days={daily} /> : <Loading />}
       </div>
+      {trend && <StageTrend trend={trend} />}
       <div className="grid two">
         <div className="card flush">
           <div className="card-title pad">Recent runs</div>

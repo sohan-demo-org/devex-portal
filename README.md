@@ -60,6 +60,8 @@ CI (`.github/workflows/ci.yml`) runs all four on every PR.
 | GET | `/api/deployments?service_id=` | production deployments |
 | GET | `/api/environments` | dev environments |
 | POST | `/api/environments/:id/start` / `stop` | change workspace state |
+| GET | `/api/regressions` | services whose p95 build time (successful runs, last 7d vs prior 7d) is >20% slower, with the slower stage and suspected first run |
+| GET | `/api/regressions/:serviceId?days=30` | build-time analysis for one service plus a per-stage daily p95 trend |
 
 ## Data model
 

@@ -123,3 +123,59 @@ export interface Page<T> {
   total: number
   result: T[]
 }
+
+// --- build regressions ---
+export interface StageComparison {
+  stage: string
+  baseline_p95_s: number
+  current_p95_s: number
+  change_pct: number
+  regressed: boolean
+}
+
+export interface SuspectRun {
+  run_id: number
+  started_at: string
+  commit_sha: string
+  commit_message: string
+  author: string
+  branch: string
+  stage_duration_s: number
+}
+
+export interface BuildAnalysis {
+  service_id: string
+  window_days: number
+  threshold_pct: number
+  baseline_runs: number
+  current_runs: number
+  baseline_p95_s: number
+  current_p95_s: number
+  change_pct: number
+  regressed: boolean
+  stage: string | null
+  stages: StageComparison[]
+  suspect: SuspectRun | null
+}
+
+export interface BuildRegression extends BuildAnalysis {
+  service_name: string
+}
+
+export interface RegressionReport {
+  window_days: number
+  threshold_pct: number
+  services_checked: number
+  regressions: BuildRegression[]
+}
+
+export interface StageTrendDay {
+  day: string
+  p95_by_stage: Record<string, number | null>
+}
+
+export interface ServiceBuildTrend {
+  analysis: BuildAnalysis
+  stage_names: string[]
+  daily: StageTrendDay[]
+}
