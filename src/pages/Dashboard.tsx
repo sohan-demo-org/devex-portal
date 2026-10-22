@@ -40,7 +40,7 @@ export function Dashboard() {
             <Kpi label="CI success rate" value={fmtPct(m.ci_success_rate)} tone={m.ci_success_rate < 0.85 ? 'warn' : 'good'} hint={`${m.ci_runs.toLocaleString()} runs`} />
             <Kpi label="Build time p50 / p95" value={`${fmtDuration(m.build_p50_s)} / ${fmtDuration(m.build_p95_s)}`} hint="successful runs" />
             <Kpi label="Queue time" value={fmtDuration(m.queue_median_s)} hint="median wait for a runner" />
-            <Kpi label="Dev environment spend" value={`${fmtMoney(m.env_cost_per_day)}/day`} hint={`${m.running_envs} running workspaces`} />
+            <Kpi label="Dev environment spend" value={`${fmtMoney(m.env_cost_per_day)}/day`} hint={`${m.running_envs} running workspaces${m.hibernated_envs ? ` · ${m.hibernated_envs} hibernated ($0/hr)` : ''}`} />
           </div>
         </>
       )}
