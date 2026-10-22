@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import type { CiRun, DailyCi, MetricsSummary, Page, ServiceSummary } from '../../shared/types.ts'
 import { useApi } from '../api.ts'
 import { CiChart } from '../components/CiChart.tsx'
+import { BuildRegressionsCard } from '../components/BuildRegressionsCard.tsx'
 import { Kpi, Loading, PageHeader, StatusPill } from '../components/ui.tsx'
 import { fmtAgo, fmtDuration, fmtMoney, fmtPct } from '../util.ts'
 
@@ -88,6 +89,7 @@ export function Dashboard() {
           </tbody>
         </table>
       </div>
+      <BuildRegressionsCard />
     </>
   )
 }
