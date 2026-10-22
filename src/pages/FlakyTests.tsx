@@ -93,8 +93,8 @@ export function FlakyTests() {
                   <tr key={testKey(t)} className={t.quarantined ? 'is-quarantined' : ''}>
                     <td className="muted">{i + 1}</td>
                     <td className="test-cell">
-                      <div className="mono">{t.test_name}{t.quarantined && <span className="tag tag-quarantined" title={t.quarantined_at ? `Quarantined ${fmtAgo(t.quarantined_at)}` : undefined}>quarantined</span>}</div>
-                      <div className="muted small">{t.suite}</div>
+                      <div className="mono">{t.test_name}</div>
+                      <div className="muted small">{t.suite}{t.quarantined && <span className="tag tag-quarantined" title={t.quarantined_at ? `Quarantined ${fmtAgo(t.quarantined_at)}` : undefined}>quarantined</span>}</div>
                     </td>
                     <td><Link to={`/services/${t.service_id}`}>{t.service_id}</Link></td>
                     <td className="nowrap">{t.owner}<div className="muted small">{t.team}</div></td>
